@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5555;
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/utravel_db');
 
 app.get('/', (req, res) => {
-  res.send({MSG: 'API'});
+  res.send({ MSG: 'API' });
 });
 
 app.use(express.static(__dirname + '/build'));

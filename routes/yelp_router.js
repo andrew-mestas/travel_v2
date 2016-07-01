@@ -27,7 +27,10 @@ yelpRouter.route("/search")
     let search = req.body.query;
     let rating = req.body.rating;
     let categories = req.body.category;
-
+    let topChoice = [];
+    let route1 = [];
+    let route2 = [];
+    let finalChoice = [];
     let results = [];
   
     search = typeof(search) === 'string' ? [search] : search;
@@ -51,16 +54,41 @@ yelpRouter.route("/search")
   });
 
 // For every category provided will step through and create routes
-
-  // Object.keys(categories).map((x)=>{
-  //   openBusinessesAscendingArray[categories[x]]
-
-
-  // });
+  Object.keys(categories).map((x)=>{
+    topChoice.push(openBusinessesAscendingArray[categories[x]][0]);
+  });
 
 
-  res.status(200).json(openBusinessesAscendingArray);
-
+let route1 = topChoice.map((x)=>{
+  console.log(x.location.coordinate)
+      return {      term: x.categories[0][0],
+                latitude: x.location.coordinate.latitude,
+               longitude: x.location.coordinate.longitude,
+                location: x.location.city + "," + x.location.state_code
+             }
 });
 
+// let route2 = topChoice.map((x)=>{
+//       return {      term: x.categories[0][0],
+//                 latitude:  x.location.coordinate.latitude,
+//                longitude: x.location.coordinate.longitude
+//              }
+// });
+
+  async.map(route1, yelpSearchFn, (err, results)=> {
+    openBusinessesAscendingArray= results.map((x)=>{
+      return x.businesses.sort((business1, business2)=>{
+        return business2.rating - business1.rating})
+               .filter((business)=>{return (!business.is_closed && business.rating > rating)});
+  });
+
+  Object.keys(categories).map((x)=>{
+    finalChoice.push(openBusinessesAscendingArray[categories[x]][0]);
+  });
+
+
+  res.status(200).json(finalChoice);
+
+});
+});
 });

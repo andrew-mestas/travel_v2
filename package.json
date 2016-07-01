@@ -57,6 +57,7 @@
     "karma-mocha-reporter": "^2.0.3",
     "stampit": "^2.1.1",
     "webpack": "^1.13.1",
-    "webpack-stream": "^3.2.0"
+    "webpack-stream": "^3.2.0",
+    "yelp": "^1.0.1"
   }
 }

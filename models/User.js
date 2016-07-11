@@ -54,7 +54,7 @@ UserSchema.methods.generateFindHash = function(cb) {
     var timeout;
     var _generateFindHash = () => {
         var hash = crypto.randomBytes(32);
-        this.findFash = hash.toString('hex');
+        this.findHash = hash.toString('hex');
         this.save((err) => {
             if (err) {
                 if (tries > 9) {

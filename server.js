@@ -5,11 +5,13 @@ const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 5555;
-const yelp = require(__dirname + "/routes/yelp_router");
+const yelp = require(__dirname + '/routes/yelp_router');
+const userRouter = require(__dirname + '/routes/user_routes');
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/utravel_db');
 
-app.use("/yelp", yelp);
+app.use('/yelp', yelp);
+app.use('/api', userRouter);
 
 app.get('/', (req, res) => {
   res.send({ MSG: 'API' });

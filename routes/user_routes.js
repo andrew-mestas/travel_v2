@@ -1,6 +1,6 @@
 'use strict';
 const Router = require('express').Router;
-const User = require(__dirname + '/../models/user');
+const User = require(__dirname + '/../models/User');
 const bodyParser = require('body-parser').json();
 const jwToken = require(__dirname + '/../lib/jwt_auth');
 const handleErr = require(__dirname + '/../lib/handle_err');
